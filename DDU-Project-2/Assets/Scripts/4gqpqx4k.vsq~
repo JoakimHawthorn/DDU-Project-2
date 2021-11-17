@@ -1,0 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SpawnManager : MonoBehaviour
+{
+    public Transform ground;
+    public Transform player;
+    public GameObject ramp;
+    public GameObject spike;
+
+    int trackWidth = 50;
+    static int[,] map;
+    int rows = 3;
+    float distance;
+    static float offset = 40;
+    public float spacing = 20f;
+
+    void Start()
+    {
+       
+        print("GEH");
+        GenerateMap();
+        PlaceObstacles();
+
+
+        //get distance and width from the ground object
+        distance = ground.localScale.z - 100;
+        trackWidth = (int)ground.localScale.x;
+        //calculate how many rows fit onto the game distance
+        rows = (int)((distance - offset) / spacing);
+        //create a map array to hold the block positions on each row
+        map = new int[rows, trackWidth];
+
+     
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    private void GenerateMap()
+    {
+        //fill the map!
+       
+    }
+
+    private void PlaceObstacles()
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < trackWidth; j++)
+            {
+                if (map[i, j] == 1)
+                {
+
+                    if (Random.Range(0, 100) < 99)
+                    {
+                        Instantiate(ramp, new Vector3(500, -160, 0), new Quaternion(0, 0, 0.0871557817f, 0.99619472f));
+                        print("1");
+                    }
+                    else
+                    {
+                        Instantiate(spike, new Vector3(500, -200, 0), Quaternion.identity);
+                        print("2");
+                    }
+
+
+                }
+            }
+        }
+
+    }
+}
